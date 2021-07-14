@@ -19,16 +19,9 @@ class TablePlugin(CMSPluginBase):
     text_enabled = True
 
     fieldsets = (
-        (None, {
-            'fields': ('name',)
-        }),
-        (_('Headers'), {
-
-            'fields': (('headers_top', 'headers_left', 'headers_bottom'),)
-        }),
-        (None, {
-            'fields': ('table_data', 'csv_upload')
-        })
+        (None, {"fields": ("name",)}),
+        (_("Headers"), {"fields": (("headers_top", "headers_left", "headers_bottom"),)}),
+        (None, {"fields": ("table_data",)}),  #  'csv_upload'
     )
 
     def render(self, context, instance, placeholder):
@@ -36,11 +29,13 @@ class TablePlugin(CMSPluginBase):
             data = json.loads(instance.table_data)
         except:
             data = "error"
-        context.update({
-            'name': instance.name,
-            'data': data,
-            'instance':instance,
-        })
+        context.update(
+            {
+                "name": instance.name,
+                "data": data,
+                "instance": instance,
+            }
+        )
         return context
 
     def icon_src(self, instance):
@@ -48,8 +43,9 @@ class TablePlugin(CMSPluginBase):
 
     def response_change(self, request, obj):
         response = super(TablePlugin, self).response_change(request, obj)
-        if 'csv_upload' in request.FILES.keys():
+        if "csv_upload" in request.FILES.keys():
             self.object_successfully_changed = False
         return response
+
 
 plugin_pool.register_plugin(TablePlugin)
