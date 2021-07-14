@@ -19,7 +19,7 @@ class TablePlugin(CMSPluginBase):
     text_enabled = True
 
     fieldsets = (
-        (None, {"fields": ("name",)}),
+        (None, {"fields": ("name", "options")}),
         (_("Headers"), {"fields": (("headers_top", "headers_left", "headers_bottom"),)}),
         (None, {"fields": ("table_data",)}),  #  'csv_upload'
     )
